@@ -1,0 +1,60 @@
+| Element         | Style                                  |
+| --------------- | -------------------------------------- |
+| Page background | Deep purple / plum gradient            |
+| Form card       | Slightly lighter/darker purple surface |
+| Card border     | Thin, low-opacity lavender/purple      |
+| Card radius     | 20–24px                                |
+| Input radius    | 12–14px                                |
+| Primary button  | Yellow/gold                            |
+| Button text     | Dark purple/black                      |
+| Main text       | Warm off-white                         |
+| Secondary text  | Muted lavender                         |
+| Labels          | Warm white, medium/bold                |
+| Placeholder     | Muted lavender                         |
+| Focus           | Yellow/gold border/glow                |
+| Error           | Soft red/pink                          |
+| Success         | Soft green                             |
+| Shadows         | Very subtle purple shadow              |
+| Spacing         | Generous, not cramped                  |
+
+
+font-family: "Nunito Sans", "Inter", sans-serif;
+
+
+Page heading
+32–40px
+Weight: 700–800
+Line height: 1.15
+
+Section heading
+24–28px
+Weight: 700–800
+Line height: 1.2
+
+Form heading
+24px
+Weight: 700–800
+
+Field label
+14–15px
+Weight: 600–700
+
+Input text
+15–16px
+Weight: 500
+
+Placeholder
+15–16px
+Weight: 400
+
+Helper text
+12–13px
+Weight: 400–500
+
+Error message
+12–13px
+Weight: 500–600
+
+Button
+14–16px
+Weight: 700

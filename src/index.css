@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+@theme {
+  /* ---- palette ---- */
+  --color-dusk: #191b3a;
+  --color-plum: #2b1b3d;
+  --color-marigold: #f5a623;
+  --color-rani: #e0357b;
+  --color-iris: #7c6ce0;
+  --color-paper: #f7f1e3;
+  --color-ink: #14121f;
+  --color-line: rgba(247, 241, 227, 0.14);
+
+  /* ---- type ---- */
+  --font-display: "Baloo 2", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Work Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* ---- layout ---- */
+  --container-arena: 1180px;
+
+  /* ---- motion ---- */
+  --animate-ticker: ticker 32s linear infinite;
+  --animate-pulse-ring: pulse-ring 1.8s infinite;
+
+  @keyframes ticker {
+    to {
+      transform: translateX(-100%);
+    }
+  }
+  @keyframes pulse-ring {
+    0% {
+      box-shadow: 0 0 0 0 rgba(245, 166, 35, 0.55);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(245, 166, 35, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(245, 166, 35, 0);
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-dusk);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-marigold);
+    outline-offset: 3px;
+  }
+}
+
+@layer utilities {
+  /* Hero stage backdrop — layered radial washes over the dusk→plum ramp */
+  .bg-stage {
+    background:
+      radial-gradient(60% 55% at 50% 0%, rgba(245, 166, 35, 0.16), transparent 70%),
+      radial-gradient(70% 60% at 85% 15%, rgba(224, 53, 123, 0.14), transparent 70%),
+      linear-gradient(180deg, var(--color-dusk) 0%, var(--color-plum) 100%);
+  }
+
+  /* Cursor-tracked spotlight; --mx / --my are set from JS */
+  .bg-spotlight {
+    background: radial-gradient(
+      320px 320px at var(--mx, 50%) var(--my, 20%),
+      rgba(247, 241, 227, 0.1),
+      transparent 65%
+    );
+  }
+
+  /* Torn ticket-stub edge between sections */
+  .perf {
+    position: relative;
+    height: 28px;
+    background: var(--color-dusk);
+  }
+  .perf::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 0;
+    height: 29px;
+    background-image: radial-gradient(circle 7px, var(--color-plum) 98%, transparent 100%);
+    background-size: 34px 29px;
+    background-position: 0 -14px;
+    background-repeat: repeat-x;
+  }
+  .perf-flip::before {
+    background-image: radial-gradient(circle 7px, var(--color-dusk) 98%, transparent 100%);
+  }
+
+  /* Corner wash used behind portal / community cards */
+  .glow-marigold {
+    background: radial-gradient(130% 110% at 0% 0%, rgba(245, 166, 35, 0.32), transparent 62%);
+  }
+  .glow-rani {
+    background: radial-gradient(130% 110% at 0% 0%, rgba(224, 53, 123, 0.32), transparent 62%);
+  }
+  .glow-iris {
+    background: radial-gradient(130% 110% at 0% 0%, rgba(124, 108, 224, 0.34), transparent 62%);
+  }
+
+  /* Softer, top-anchored variant used behind the community cards */
+  .glow-top-rani {
+    background: radial-gradient(120% 100% at 20% 0%, rgba(224, 53, 123, 0.35), transparent 60%);
+  }
+  .glow-top-marigold {
+    background: radial-gradient(120% 100% at 20% 0%, rgba(245, 166, 35, 0.3), transparent 60%);
+  }
+  .glow-top-iris {
+    background: radial-gradient(120% 100% at 20% 0%, rgba(124, 108, 224, 0.32), transparent 60%);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    height: 6px;
+  }
+  .no-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--color-line);
+    border-radius: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
