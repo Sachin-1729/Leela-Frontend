@@ -1,7 +1,7 @@
 import api from "../api";
 
-export const getLead = () => {
-  return api.get("/lead");
+export const getLead = (data) => {
+  return api.get(`/lead?page=${data}`);
 };
 
 export const createLead = (data) => {

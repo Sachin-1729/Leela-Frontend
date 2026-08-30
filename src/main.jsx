@@ -4,9 +4,11 @@ import './index.css'
 import App from './App.jsx'
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthProvider } from './context/Authcontext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <>
+  <AuthProvider>
     <App />
 
     <ToastContainer
@@ -14,5 +16,9 @@ createRoot(document.getElementById('root')).render(
       autoClose={3000}
       theme="dark"
     />
+
+
+  </AuthProvider>
+
   </>,
 )
