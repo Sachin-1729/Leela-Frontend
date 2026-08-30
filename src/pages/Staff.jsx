@@ -34,6 +34,11 @@ export default function Staffs() {
     getLeads(page);
   }, [page]);
 
+  function dkjsadsas()
+  {
+
+  }
+
   return (
     <div
       className="min-h-screen px-6 py-8"
@@ -65,7 +70,7 @@ export default function Staffs() {
           </button>
         </div>
 
-        <Table columns={columns} data={data} />
+        <Table onView={dkjsadsas} columns={columns} data={data} />
 
         {/* Pagination */}
         <div className="mt-6 flex items-center justify-center gap-2">

@@ -8,6 +8,9 @@ import Leads from './pages/Leads'
 import Events from './pages/Event'
 import Staffs from './pages/Staff'
 import AddStaff from './pages/AddStaff'
+import AddEvent from './pages/AddEvent'
+import AddCategory from './pages/AddCategory'
+import Categories from './pages/Categories'
 
 function App() {
   return (
@@ -27,6 +30,9 @@ function App() {
               <Route path='/events' element = {<Events/>} />
               <Route path='/staffs' element = {<Staffs/>} />
               <Route path='/staffs/add' element = {<AddStaff/>}/>
+              <Route path='/events/add' element = {<AddEvent/>}/>
+              <Route path='/categories/add' element = {<AddCategory/>}/>
+              <Route path='/categories' element={<Categories/>}/>
      
         </Route>
 

@@ -1,10 +1,9 @@
 import Table from "../components/Table";
-import { getLead } from "../api/lead";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getEvents } from "../api/event";
+// import { getCategories } from "../api/category";
 
-export default function Events() {
+export default function Categories() {
   const navigate = useNavigate();
 
   const [data, setData] = useState([]);
@@ -15,36 +14,36 @@ export default function Events() {
 
   const columns = [
     {
-      key: "id",
-      label: "Id",
+      key: "eventId",
+      label: "Event Id",
     },
     {
-      key: "date",
-      label: "Date",
-    },
-    {
-      key: "ownerName",
-      label: "Client Name",
-    },
-    {
-      key: "whatsappNumber",
-      label: "Whatsapp",
+      key: "name",
+      label: "Category Name",
     },
     {
       key: "eventName",
-      label: "Event name",
+      label: "Event Name",
+    },
+    {
+      key: "ownerName",
+      label: "Event Owner",
+    },
+    {
+      key: "date",
+      label: "Event Date",
     },
   ];
 
-  async function getEventData(page = 1) {
-    const response = await getEvents(page);
+  async function getCategoryData(page = 1) {
+    const response = await getCategories(page);
 
     setTotal(response.data.total);
     setData(response.data.data);
   }
 
   useEffect(() => {
-    getEventData(page);
+   // getCategoryData(page);
   }, [page]);
 
   return (
@@ -62,19 +61,19 @@ export default function Events() {
         <div className="mb-6 flex items-center justify-between">
           <div>
             <h1 className="text-[36px] font-extrabold leading-[1.15] text-[#fffaf0]">
-              Events
+              Categories
             </h1>
 
             <p className="mt-2 text-[15px] text-[#b9a8c7]">
-              Manage your Events
+              Manage your Categories
             </p>
           </div>
 
           <button
-            onClick={() => navigate("/events/add")}
+            onClick={() => navigate("/categories/add")}
             className="rounded-lg bg-purple-600 px-5 py-3 font-semibold text-white transition hover:bg-purple-700"
           >
-            + Add Event
+            + Add Category
           </button>
         </div>
 
@@ -100,6 +99,7 @@ export default function Events() {
             );
           })}
         </div>
+
       </div>
     </div>
   );

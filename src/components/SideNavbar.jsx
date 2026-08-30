@@ -1,8 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/Authcontext";
 
 export default function Sidebar() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { logout } = useAuth();
 
   const menuItems = [
@@ -13,6 +14,18 @@ export default function Sidebar() {
     {
       name: "Events",
       path: "/events",
+    },
+    {
+      name: "Categories",
+      path: "/categories",
+    },
+    {
+      name: "Tasks",
+      path: "/tasks",
+    },
+    {
+      name: "Task Reminders",
+      path: "/taskreminders",
     },
     {
       name: "Staffs",
@@ -44,24 +57,32 @@ export default function Sidebar() {
 
       {/* Navigation */}
       <nav className="px-3 mt-4 space-y-1">
-        {menuItems.map((item) => (
-          <div
-            key={item.path}
-            onClick={() => navigate(item.path)}
-            className="
-              px-4 py-3
-              rounded-xl
-              text-[15px] font-semibold
-              text-[#c8b8d6]
-              hover:text-[#fff9ef]
-              hover:bg-purple-300/10
-              cursor-pointer
-              transition
-            "
-          >
-            {item.name}
-          </div>
-        ))}
+        {menuItems.map((item) => {
+          const isActive = location.pathname
+            .toLowerCase()
+            .includes(item.path.toLowerCase());
+
+          return (
+            <div
+              key={item.path}
+              onClick={() => navigate(item.path)}
+              className={`
+                px-4 py-3
+                rounded-xl
+                text-[15px] font-semibold
+                cursor-pointer
+                transition
+                ${
+                  isActive
+                    ? "bg-purple-600 text-white"
+                    : "text-[#c8b8d6] hover:text-[#fff9ef] hover:bg-purple-300/10"
+                }
+              `}
+            >
+              {item.name}
+            </div>
+          );
+        })}
       </nav>
 
       {/* Logout */}
