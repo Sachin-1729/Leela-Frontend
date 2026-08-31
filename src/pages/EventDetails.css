@@ -853,3 +853,245 @@
 .event-status.over .status-dot {
   background-color: #ef4444;
 }
+
+
+
+
+
+/* =========================
+   Add Category
+========================= */
+
+.category-header-action {
+  display: flex;
+  align-items: center;
+}
+
+.add-category-button {
+  border: none;
+  background: #6d4aff;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.add-category-button:hover {
+  opacity: 0.9;
+}
+
+.add-category-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-category-form input {
+  width: 220px;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  font-size: 14px;
+}
+
+.add-category-form input:focus {
+  border-color: #6d4aff;
+}
+
+.add-category-form button {
+  border: none;
+  background: #6d4aff;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.add-category-form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/* =========================
+   Category Header
+========================= */
+
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.category-progress {
+  margin-left: auto;
+}
+
+.add-task-button {
+  border: none;
+  background: #6d4aff;
+  color: white;
+  padding: 9px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.add-task-button:hover {
+  opacity: 0.9;
+}
+
+
+/* =========================
+   Add Task Form
+========================= */
+
+.add-task-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  margin-top: 12px;
+  background: #f8f7ff;
+  border-radius: 10px;
+}
+
+.add-task-form input {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  font-size: 14px;
+}
+
+.add-task-form input:focus {
+  border-color: #6d4aff;
+}
+
+.add-task-form select {
+  width: 200px;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  background: white;
+  font-size: 14px;
+}
+
+.add-task-form select:focus {
+  border-color: #6d4aff;
+}
+
+.add-task-form button {
+  border: none;
+  background: #6d4aff;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.add-task-form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/* =========================
+   Cancel
+========================= */
+
+.cancel-button {
+  background: #eeeeee !important;
+  color: #333 !important;
+}
+
+.cancel-button:hover {
+  background: #e2e2e2 !important;
+}
+
+
+/* =========================
+   Empty Categories
+========================= */
+
+.no-categories {
+  padding: 40px;
+  text-align: center;
+  color: #777;
+}
+
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 768px) {
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .category-header {
+    flex-wrap: wrap;
+  }
+
+  .category-progress {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .add-task-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .add-task-form input,
+  .add-task-form select {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .add-task-form button {
+    width: 100%;
+  }
+
+  .add-category-form {
+    flex-wrap: wrap;
+  }
+
+  .add-category-form input {
+    width: 100%;
+  }
+
+}
+
+.add-task-form input::placeholder,
+.add-task-form select {
+  color: #999;
+}
+
+.add-task-form input {
+  color: #222;
+  background: white;
+}
+
+.add-task-form select {
+  color: #222;
+  background: white;
+}
+
+.add-task-form input::placeholder {
+  color: #999;
+  opacity: 1;
+}
