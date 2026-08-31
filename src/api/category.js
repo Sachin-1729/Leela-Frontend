@@ -7,3 +7,8 @@ export const getCategory = (data) => {
 export const createCategory = (data) => {
   return api.post("/category", data);
 };
+
+
+export const getAllCategory = () =>{
+  return api.get("/category/all")
+}

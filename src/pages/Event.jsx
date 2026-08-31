@@ -47,6 +47,11 @@ export default function Events() {
     getEventData(page);
   }, [page]);
 
+  async function handleView(id)
+  {
+    navigate(`/events/${id}`)
+  }
+
   return (
     <div
       className="min-h-screen px-6 py-8"
@@ -78,7 +83,7 @@ export default function Events() {
           </button>
         </div>
 
-        <Table columns={columns} data={data} />
+        <Table onView={handleView} columns={columns} data={data} />
 
         {/* Pagination */}
         <div className="mt-6 flex items-center justify-center gap-2">

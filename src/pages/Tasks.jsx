@@ -1,7 +1,7 @@
 import Table from "../components/Table";
 import { useEffect, useState  } from "react";
 import { useNavigate } from "react-router-dom";
-// import { getTask } from "../api/task";
+ import { getTasks } from "../api/task";
 
 export default function Tasks() {
   const [data, setData] = useState([]);
@@ -31,10 +31,10 @@ export default function Tasks() {
   ];
 
   async function getTaskData(page = 1) {
-    //const response = await getTask(page);
+    const response = await getTasks(page);
 
-    // setTotal(response.data.total);
-    // setData(response.data.data);
+    setTotal(response.data.total);
+    setData(response.data.data);
   }
 
   useEffect(() => {

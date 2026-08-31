@@ -1,9 +1,9 @@
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { createTask } from "../api/task";
-// import { getCategory } from "../api/category";
-// import { getStaff } from "../api/staff";
+import { createTasks } from "../api/task";
+import { getAllCategory } from "../api/category";
+import { getAllStaff } from "../api/staff";
 
 export default function AddTask() {
   const navigate = useNavigate();
@@ -18,23 +18,23 @@ export default function AddTask() {
   const [errors, setErrors] = useState({});
 
   // Get categories and staffs
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const [categoryResponse, staffResponse] = await Promise.all([
-//           getCategory(1),
-//           getStaff(1),
-//         ]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [categoryResponse, staffResponse] = await Promise.all([
+          getAllCategory(),
+          getAllStaff(),
+        ]);
 
-//         setCategories(categoryResponse.data.data);
-//         setStaffs(staffResponse.data.data);
-//       } catch (error) {
-//         console.error("Error fetching categories/staffs:", error);
-//       }
-//     };
+        setCategories(categoryResponse.data.data);
+        setStaffs(staffResponse.data.data);
+      } catch (error) {
+        console.error("Error fetching categories/staffs:", error);
+      }
+    };
 
-//     fetchData();
-//   }, []);
+    fetchData();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,7 +65,7 @@ export default function AddTask() {
     };
 
     try {
-      await createTask(data);
+      await createTasks(data);
 
       navigate("/tasks");
     } catch (error) {
@@ -132,7 +132,7 @@ export default function AddTask() {
 
                 {categories.map((category) => (
                   <option key={category.id} value={category.id}>
-                    {category.name}
+                   {category.id} {category.name}
                   </option>
                 ))}
               </select>
@@ -166,7 +166,7 @@ export default function AddTask() {
 
                 {staffs.map((staff) => (
                   <option key={staff.id} value={staff.id}>
-                    {staff.name}
+                  {staff.whatsappNumber}  {staff.name}
                   </option>
                 ))}
               </select>
