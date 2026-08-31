@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getEvents } from "../api/event";
-// import { createCategory } from "../api/category";
+import { createCategory } from "../api/category";
 
 export default function AddCategory() {
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ export default function AddCategory() {
         name,
       };
 
-      // await createCategory(data);
+     await createCategory(data);
 
       console.log(data);
 
@@ -109,7 +109,7 @@ export default function AddCategory() {
 
               {events.map((event) => (
                 <option key={event.id} value={event.id}>
-                  {event.eventName}
+              {`id:${event.id}  ${event.eventName}`}
                 </option>
               ))}
             </select>

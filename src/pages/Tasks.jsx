@@ -1,41 +1,44 @@
 import Table from "../components/Table";
-import { useEffect, useState } from "react";
+import { useEffect, useState  } from "react";
 import { useNavigate } from "react-router-dom";
-import { getCategory } from "../api/category";
+// import { getTask } from "../api/task";
 
-export default function Categories() {
-  const navigate = useNavigate();
-
+export default function Tasks() {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
 
   const totalPages = Math.ceil(total / 10);
+  const navigate = useNavigate();
 
   const columns = [
     {
-      key: "id",
-      label: "Category Id"
+      key: "categoryId",
+      label: "Category Id",
     },
     {
-      key: "eventId",
-      label: "Event Id",
+      key: "title",
+      label: "Task Title",
     },
     {
-      key: "name",
-      label: "Category Name",
-    }
+      key: "staffId",
+      label: "Staff Id",
+    },
+    {
+      key: "status",
+      label: "Status",
+    },
   ];
 
-  async function getCategoryData(page = 1) {
-    const response = await getCategory(page);
+  async function getTaskData(page = 1) {
+    //const response = await getTask(page);
 
-    setTotal(response.data.total);
-    setData(response.data.data);
+    // setTotal(response.data.total);
+    // setData(response.data.data);
   }
 
   useEffect(() => {
-   getCategoryData(page);
+    getTaskData(page);
   }, [page]);
 
   return (
@@ -48,27 +51,26 @@ export default function Categories() {
       }}
     >
       <div className="mx-auto max-w-7xl">
-
         {/* Header */}
         <div className="mb-6 flex items-center justify-between">
           <div>
             <h1 className="text-[36px] font-extrabold leading-[1.15] text-[#fffaf0]">
-              Categories
+              Tasks
             </h1>
 
             <p className="mt-2 text-[15px] text-[#b9a8c7]">
-              Manage your Categories
+              Manage your Tasks
             </p>
           </div>
-
-          <button
-            onClick={() => navigate("/categories/add")}
+              <button
+            onClick={() => navigate("/tasks/add")}
             className="rounded-lg bg-purple-600 px-5 py-3 font-semibold text-white transition hover:bg-purple-700"
           >
-            + Add Category
+            + Add Task
           </button>
         </div>
 
+        {/* Table */}
         <Table columns={columns} data={data} />
 
         {/* Pagination */}
@@ -91,7 +93,6 @@ export default function Categories() {
             );
           })}
         </div>
-
       </div>
     </div>
   );
