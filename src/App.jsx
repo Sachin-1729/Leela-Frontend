@@ -14,6 +14,8 @@ import Categories from './pages/Categories'
 import Tasks from './pages/Tasks'
 import AddTask from './pages/AddTasks'
 import EventDetails from './pages/EventDetail'
+import EventTemplate from './pages/EventTemplate'
+import AddEventTemplate from './pages/AddEventTemplate'
 
 function App() {
   return (
@@ -39,6 +41,8 @@ function App() {
               <Route path='/categories' element={<Categories/>}/>
               <Route path='/tasks' element={<Tasks/>} />
               <Route path="/tasks/add" element={<AddTask/>}/>
+              <Route path='/template' element={<EventTemplate/>}/>
+              <Route path='/template/add' element={<AddEventTemplate/>}/>
      
         </Route>
 

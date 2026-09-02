@@ -16,17 +16,21 @@ export default function Sidebar() {
       path: "/events",
     },
     {
-      name: "Categories",
-      path: "/categories",
+      name: "Template",
+      path: "/template",
     },
-    {
-      name: "Tasks",
-      path: "/tasks",
-    },
-    {
-      name: "Task Reminders",
-      path: "/taskreminders",
-    },
+    // {
+    //   name: "Categories",
+    //   path: "/categories",
+    // },
+    // {
+    //   name: "Tasks",
+    //   path: "/tasks",
+    // },
+    // {
+    //   name: "Task Reminders",
+    //   path: "/taskreminders",
+    // },
     {
       name: "Staffs",
       path: "/staffs",
