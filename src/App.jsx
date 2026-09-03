@@ -16,6 +16,7 @@ import AddTask from './pages/AddTasks'
 import EventDetails from './pages/EventDetail'
 import EventTemplate from './pages/EventTemplate'
 import AddEventTemplate from './pages/AddEventTemplate'
+import EventTemplateDetail from './pages/EventTemplateDetail'
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
               <Route path="/tasks/add" element={<AddTask/>}/>
               <Route path='/template' element={<EventTemplate/>}/>
               <Route path='/template/add' element={<AddEventTemplate/>}/>
+              <Route path='/template/:id' element={<EventTemplateDetail/>}/>
      
         </Route>
 

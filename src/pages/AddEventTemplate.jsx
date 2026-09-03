@@ -25,7 +25,7 @@ export default function AddEventTemplate() {
         name: name.trim(),
       });
 
-      navigate("/event-templates");
+      navigate("/template");
     } catch (error) {
       console.error(error);
 
@@ -104,7 +104,7 @@ export default function AddEventTemplate() {
             <div className="flex justify-end gap-3 pt-4">
               <button
                 type="button"
-                onClick={() => navigate("/event-templates")}
+                onClick={() => navigate("/template")}
                 className="rounded-[13px] border border-[#bca8c9]/20 px-5 py-3 text-[15px] font-bold text-[#d5c5dc] transition hover:bg-[#ffffff]/5"
               >
                 Cancel
