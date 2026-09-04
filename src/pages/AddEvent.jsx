@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { createEvent } from "../api/event";
+import {getEventTemplates} from "../api/template"
 
 export default function AddEvent() {
   const navigate = useNavigate();
@@ -9,6 +10,8 @@ export default function AddEvent() {
   const [eventName, setEventName] = useState("");
   const [clientName, setClientName] = useState("");
   const [whatsappNumber, setWhatsappNumber] = useState("");
+  const [eventTemplates, setEventTemplates] = useState([]);
+const [eventTemplateId, setEventTemplateId] = useState("");
 
   const [errors, setErrors] = useState({});
 
@@ -46,6 +49,10 @@ export default function AddEvent() {
       whatsapp_number: whatsappNumber,
     };
 
+if (eventTemplateId) {
+  data.eventTemplateId = Number(eventTemplateId);
+}
+
 
 
       
@@ -53,6 +60,20 @@ export default function AddEvent() {
 
    navigate("/events");
   };
+
+useEffect(() => {
+  const fetchEventTemplates = async () => {
+    try {
+      const response = await getEventTemplates();
+
+      setEventTemplates(response.data.data);
+    } catch (error) {
+      console.error("Failed to fetch event templates", error);
+    }
+  };
+
+  fetchEventTemplates();
+}, []);
 
   return (
     <div
@@ -89,6 +110,8 @@ export default function AddEvent() {
             Event Information
           </h2>
 
+          
+
           <form onSubmit={handleSubmit} className="space-y-6">
 
             {/* Date */}
@@ -116,6 +139,22 @@ export default function AddEvent() {
                 </p>
               )}
             </div>
+
+              <select
+              value={eventTemplateId}
+              onChange={(e) => setEventTemplateId(e.target.value)}
+              className="w-full rounded-[13px] border border-[#bca8c9]/20 bg-[#2b1835] px-4 py-3.5 text-[15px] font-medium text-[#fff8ee] outline-none transition focus:border-[#f4c95d] focus:ring-2 focus:ring-[#f4c95d]/20"
+            >
+              <option value="">
+                Select event template (Optional)
+              </option>
+
+              {eventTemplates.map((template) => (
+                <option key={template.id} value={template.id}>
+                 {template.id} {template.name}
+                </option>
+              ))}
+            </select>
 
             {/* Event Name */}
             <div>
@@ -223,6 +262,8 @@ export default function AddEvent() {
             </div>
 
           </form>
+
+ 
         </div>
       </div>
     </div>
