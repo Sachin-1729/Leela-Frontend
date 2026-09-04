@@ -11,7 +11,9 @@ export default function AddEvent() {
   const [clientName, setClientName] = useState("");
   const [whatsappNumber, setWhatsappNumber] = useState("");
   const [eventTemplates, setEventTemplates] = useState([]);
-const [eventTemplateId, setEventTemplateId] = useState("");
+  const [eventTemplateId, setEventTemplateId] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
 
   const [errors, setErrors] = useState({});
 
@@ -42,11 +44,18 @@ const [eventTemplateId, setEventTemplateId] = useState("");
       return;
     }
 
+    if (startTime && endTime && endTime <= startTime) {
+     newErrors.endTime = "End time must be greater than start time";
+     return;
+}
+
     const data = {
       date,
       eventName: eventName.trim(),
       owner_name: clientName.trim(),
       whatsapp_number: whatsappNumber,
+      start:startTime,
+      end:endTime
     };
 
 if (eventTemplateId) {
@@ -139,6 +148,33 @@ useEffect(() => {
                 </p>
               )}
             </div>
+            {/* Start Time */}
+                  <div>
+                    <label className="mb-2 block text-[15px] font-bold text-[#fff8ee]">
+                      Start Time
+                    </label>
+
+                    <input
+                      type="time"
+                      value={startTime}
+                      onChange={(e) => setStartTime(e.target.value)}
+                      className="w-full rounded-[13px] border border-[#bca8c9]/20 bg-[#2b1835] px-4 py-3.5 text-[15px] font-medium text-[#fff8ee] outline-none transition focus:border-[#f4c95d] focus:ring-2 focus:ring-[#f4c95d]/20"
+                    />
+                  </div>
+
+                  {/* End Time */}
+                  <div>
+                    <label className="mb-2 block text-[15px] font-bold text-[#fff8ee]">
+                      End Time
+                    </label>
+
+                    <input
+                      type="time"
+                      value={endTime}
+                      onChange={(e) => setEndTime(e.target.value)}
+                      className="w-full rounded-[13px] border border-[#bca8c9]/20 bg-[#2b1835] px-4 py-3.5 text-[15px] font-medium text-[#fff8ee] outline-none transition focus:border-[#f4c95d] focus:ring-2 focus:ring-[#f4c95d]/20"
+                    />
+                  </div>
 
               <select
               value={eventTemplateId}

@@ -369,77 +369,102 @@ export default function EventDetails() {
           Event Information
       ========================== */}
 
-      <section className="event-info-card">
+   <section className="event-info-card">
 
-        <div className="info-item">
+  {/* Event Date */}
+  <div className="info-item">
+    <span className="info-icon">
+      📅
+    </span>
 
-          <span className="info-icon">
-            📅
-          </span>
+    <div>
+      <span className="info-label">
+        Event Date
+      </span>
 
-          <div>
-
-            <span className="info-label">
-              Event Date
-            </span>
-
-            <strong>
-              {new Date(
-                event.date
-              ).toLocaleDateString("en-IN", {
-                day: "2-digit",
-                month: "long",
-                year: "numeric",
-              })}
-            </strong>
-
-          </div>
-
-        </div>
+      <strong>
+        {new Date(event.date).toLocaleDateString("en-IN", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        })}
+      </strong>
+    </div>
+  </div>
 
 
-        <div className="info-item">
+  {/* Start Time */}
+  <div className="info-item">
+    <span className="info-icon">
+      🕐
+    </span>
 
-          <span className="info-icon">
-            👤
-          </span>
+    <div>
+      <span className="info-label">
+        Start Time
+      </span>
 
-          <div>
-
-            <span className="info-label">
-              Event Owner
-            </span>
-
-            <strong>
-              {event.ownerName}
-            </strong>
-
-          </div>
-
-        </div>
+      <strong>
+        {event.start || "Not specified"}
+      </strong>
+    </div>
+  </div>
 
 
-        <div className="info-item">
+  {/* End Time */}
+  <div className="info-item">
+    <span className="info-icon">
+      🕐
+    </span>
 
-          <span className="info-icon">
-            💬
-          </span>
+    <div>
+      <span className="info-label">
+        End Time
+      </span>
 
-          <div>
+      <strong>
+        {event.end || "Not specified"}
+      </strong>
+    </div>
+  </div>
 
-            <span className="info-label">
-              WhatsApp
-            </span>
 
-            <strong>
-              {event.whatsappNumber}
-            </strong>
+  {/* Client */}
+  <div className="info-item">
+    <span className="info-icon">
+      👤
+    </span>
 
-          </div>
+    <div>
+      <span className="info-label">
+        Client
+      </span>
 
-        </div>
+      <strong>
+        {event.ownerName}
+      </strong>
+    </div>
+  </div>
 
-      </section>
+
+  {/* WhatsApp */}
+  <div className="info-item">
+    <span className="info-icon">
+      💬
+    </span>
+
+    <div>
+      <span className="info-label">
+        WhatsApp
+      </span>
+
+      <strong>
+        {event.whatsappNumber}
+      </strong>
+    </div>
+  </div>
+
+</section>
 
 
       {/* =========================
