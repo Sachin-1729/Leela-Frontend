@@ -1,0 +1,212 @@
+/* =========================
+   GUEST UPLOAD
+========================= */
+
+.guest-upload-card,
+.guest-list-card {
+  max-width: 1400px;
+  margin: 0 auto 22px;
+  padding: 24px 26px;
+
+  border: 1px solid rgba(186, 158, 211, 0.13);
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.045);
+  backdrop-filter: blur(10px);
+}
+
+.guest-upload-header,
+.guest-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.guest-upload-header h2,
+.guest-list-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.guest-list-header h2 span {
+  color: #94879f;
+  font-weight: 600;
+}
+
+.guest-upload-header p {
+  margin: 6px 0 0;
+  color: #a495b0;
+  font-size: 13px;
+}
+
+.guest-upload-header code {
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: rgba(237, 190, 69, 0.12);
+  color: #edc34f;
+}
+
+.primary-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.guest-upload-preview {
+  margin-top: 20px;
+  padding: 16px 18px;
+
+  border: 1px dashed rgba(237, 190, 69, 0.35);
+  border-radius: 14px;
+
+  background: rgba(237, 190, 69, 0.05);
+}
+
+.guest-upload-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+
+  font-size: 14px;
+}
+
+.guest-upload-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.guest-cancel-button {
+  padding: 11px 18px;
+
+  border: 1px solid rgba(196, 174, 216, 0.2);
+  border-radius: 12px;
+
+  background: transparent;
+  color: #faf7f2;
+
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.guest-cancel-button:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.guest-upload-errors {
+  margin: 14px 0 0;
+  padding-left: 18px;
+
+  color: #f19a9a;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* =========================
+   GUEST LIST
+========================= */
+
+.guest-list-header {
+  margin-bottom: 18px;
+}
+
+.guest-search {
+  width: 260px;
+  padding: 10px 14px;
+
+  border: 1px solid rgba(196, 174, 216, 0.2);
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.05);
+  color: #faf7f2;
+
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.guest-search:focus {
+  border-color: rgba(237, 190, 69, 0.6);
+}
+
+.guest-table-wrap {
+  overflow-x: auto;
+}
+
+.guest-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.guest-table th {
+  padding: 12px 14px;
+
+  border-bottom: 1px solid rgba(186, 158, 211, 0.15);
+
+  color: #94879f;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.guest-table td {
+  padding: 13px 14px;
+  border-bottom: 1px solid rgba(186, 158, 211, 0.07);
+}
+
+.guest-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.guest-table td:first-child,
+.guest-table th:first-child {
+  width: 60px;
+  color: #94879f;
+}
+
+/* Manage guests button on the event detail page */
+.manage-guests-button {
+  margin-top: 4px;
+  padding: 7px 14px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #edc34f;
+  color: #211326;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.manage-guests-button:hover {
+  background: #f4ce64;
+}
+
+@media (max-width: 600px) {
+
+  .guest-upload-header,
+  .guest-list-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .guest-search {
+    width: 100%;
+  }
+
+  .guest-upload-card,
+  .guest-list-card {
+    padding: 20px;
+  }
+
+}

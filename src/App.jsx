@@ -14,6 +14,7 @@ import Categories from './pages/Categories'
 import Tasks from './pages/Tasks'
 import AddTask from './pages/AddTasks'
 import EventDetails from './pages/EventDetail'
+import EventGuests from './pages/EventGuests'
 import EventTemplate from './pages/EventTemplate'
 import AddEventTemplate from './pages/AddEventTemplate'
 import EventTemplateDetail from './pages/EventTemplateDetail'
@@ -35,6 +36,7 @@ function App() {
               <Route path='/leads' element = {<Leads/>} />
               <Route path='/events' element = {<Events/>} />
               <Route path='/events/:id' element={<EventDetails/>} />
+              <Route path='/events/:id/guests' element={<EventGuests/>} />
               <Route path='/staffs' element = {<Staffs/>} />
               <Route path='/staffs/add' element = {<AddStaff/>}/>
               <Route path='/events/add' element = {<AddEvent/>}/>

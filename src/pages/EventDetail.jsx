@@ -16,6 +16,7 @@ import {
 } from "../lib/reminder";
 
 import "./EventDetails.css";
+import "./EventGuests.css";
 
 export default function EventDetails() {
   const { id } = useParams();
@@ -499,6 +500,27 @@ export default function EventDetails() {
       <strong>
         {event.whatsappNumber}
       </strong>
+    </div>
+  </div>
+
+
+  {/* Guests */}
+  <div className="info-item">
+    <span className="info-icon">
+      👥
+    </span>
+
+    <div>
+      <span className="info-label">
+        Guests
+      </span>
+
+      <button
+        className="manage-guests-button"
+        onClick={() => navigate(`/events/${id}/guests`)}
+      >
+        Manage Guests
+      </button>
     </div>
   </div>
 
