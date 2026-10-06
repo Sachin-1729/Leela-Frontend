@@ -10,6 +10,8 @@ import {
   REMINDER_TYPE_OPTIONS,
   isValidReminderType,
   sanitizeReminderTime,
+  REMINDER_TIME_PLACEHOLDER,
+  REMINDER_TIME_ERROR,
   formatReminder,
 } from "../lib/reminder";
 
@@ -924,10 +926,10 @@ export default function EventDetails() {
                       <input
                         type="text"
                         inputMode="numeric"
-                        placeholder="Time (HH:mm)"
-                        title="Reminder offset from the event start, e.g. 01:30"
-                        maxLength={5}
-                        pattern="([01][0-9]|2[0-3]):[0-5][0-9]"
+                        placeholder={`Time (${REMINDER_TIME_PLACEHOLDER})`}
+                        title="Reminder offset from the event start in days:hours:minutes, e.g. 01:02:30"
+                        maxLength={8}
+                        pattern="[0-9]{2}:([01][0-9]|2[0-3]):[0-5][0-9]"
                         value={taskTime}
                         onChange={(e) =>
                           handleTaskTimeChange(
@@ -995,7 +997,7 @@ export default function EventDetails() {
 
                       {taskTime && !isTaskTimeValid && (
                         <span className="task-form-error">
-                          Time must be in HH:mm format (e.g. 01:30)
+                          {REMINDER_TIME_ERROR}
                         </span>
                       )}
 
