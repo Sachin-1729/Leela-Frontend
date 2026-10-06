@@ -7,3 +7,7 @@ export const getLead = (data) => {
 export const createLead = (data) => {
   return api.post("/lead", data);
 };
+
+export const updateLeadRemarks = (id, remarks) => {
+  return api.put(`/lead/${id}/remarks`, { remarks });
+};

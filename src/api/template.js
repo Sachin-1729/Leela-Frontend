@@ -47,7 +47,7 @@ export const createTaskTemplate = (categoryTemplateId, data) => {
 };
 
 export const updateTaskTemplate = (id, data) => {
-  return api.put(`/task-templates/${id}`, data);
+  return api.put(`/template/tasks/${id}`, data);
 };
 
 export const deleteTaskTemplate = (id) => {

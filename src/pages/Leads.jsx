@@ -1,4 +1,5 @@
 import Table from "../components/Table";
+import LeadRemarksCell from "../components/LeadRemarksCell";
 import { getLead } from "../api/lead";
 import { useEffect, useState } from "react";
 
@@ -22,7 +23,54 @@ export default function Leads() {
       key: "date",
       label: "Event Date",
     },
+    {
+      key: "event",
+      label: "Event",
+      render: (lead) =>
+        lead.event ? (
+          <span
+            title={lead.event}
+            className="block max-w-[240px] truncate"
+          >
+            {lead.event}
+          </span>
+        ) : (
+          <span className="text-[#8f7aa0]">—</span>
+        ),
+    },
+    {
+      key: "createdAt",
+      label: "Enquiry Date",
+      render: (lead) =>
+        lead.createdAt ? (
+          new Date(lead.createdAt).toLocaleDateString("en-IN", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+          })
+        ) : (
+          <span className="text-[#8f7aa0]">—</span>
+        ),
+    },
+    {
+      key: "remarks",
+      label: "Remarks",
+      render: (lead) => (
+        <LeadRemarksCell
+          lead={lead}
+          onSaved={handleRemarksSaved}
+        />
+      ),
+    },
   ];
+
+  function handleRemarksSaved(updatedLead) {
+    setData((leads) =>
+      leads.map((lead) =>
+        lead.id === updatedLead.id ? { ...lead, ...updatedLead } : lead
+      )
+    );
+  }
 
   async function getLeads(page = 1) {
     const response = await getLead(page);

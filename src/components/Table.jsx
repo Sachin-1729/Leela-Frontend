@@ -45,7 +45,7 @@ export default function Table({
                     key={column.key}
                     className="px-6 py-4 text-[15px] text-[#d8ccdf]"
                   >
-                    {item[column.key]}
+                    {column.render ? column.render(item) : item[column.key]}
                   </td>
                 ))}
 

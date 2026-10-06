@@ -2,41 +2,45 @@ import { useState , useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { createEvent } from "../api/event";
 import {getEventTemplates} from "../api/template"
+import { getLead } from "../api/lead";
 
 export default function AddEvent() {
   const navigate = useNavigate();
 
   const [date, setDate] = useState("");
   const [eventName, setEventName] = useState("");
-  const [clientName, setClientName] = useState("");
-  const [whatsappNumber, setWhatsappNumber] = useState("");
+  const [leads, setLeads] = useState([]);
+  const [leadId, setLeadId] = useState("");
   const [eventTemplates, setEventTemplates] = useState([]);
   const [eventTemplateId, setEventTemplateId] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
 
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async(e) => {
+
     e.preventDefault();
 
+    if (isSubmitting) return;
+ 
     const newErrors = {};
-
-    if (!date) {
-      newErrors.date = "Date is required";
-    }
 
     if (!eventName.trim()) {
       newErrors.eventName = "Event name is required";
     }
 
-    if (!clientName.trim()) {
-      newErrors.clientName = "Client name is required";
+    const selectedLead = leads.find((lead) => String(lead.id) === leadId);
+
+    if (!selectedLead) {
+      newErrors.lead = "Please select a lead";
+    } else if (!date) {
+      newErrors.date = "Selected lead has no event date";
     }
 
-    if (!/^\d{10}$/.test(whatsappNumber)) {
-      newErrors.whatsappNumber =
-        "WhatsApp number must be exactly 10 digits";
+    if (startTime && endTime && endTime <= startTime) {
+      newErrors.endTime = "End time must be greater than start time";
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -44,16 +48,11 @@ export default function AddEvent() {
       return;
     }
 
-    if (startTime && endTime && endTime <= startTime) {
-     newErrors.endTime = "End time must be greater than start time";
-     return;
-}
-
     const data = {
       date,
       eventName: eventName.trim(),
-      owner_name: clientName.trim(),
-      whatsapp_number: whatsappNumber,
+      owner_name: selectedLead.name,
+      whatsapp_number: selectedLead.phone,
       start:startTime,
       end:endTime
     };
@@ -65,9 +64,14 @@ if (eventTemplateId) {
 
 
       
-  const response = await createEvent(data);
-
-   navigate("/events");
+  setIsSubmitting(true);
+  try {
+  
+    await createEvent(data);
+    navigate("/events");
+  } finally {
+    setIsSubmitting(false);
+  }
   };
 
 useEffect(() => {
@@ -82,6 +86,29 @@ useEffect(() => {
   };
 
   fetchEventTemplates();
+}, []);
+
+useEffect(() => {
+  // /lead is paginated, so keep fetching until next === -1
+  const fetchLeads = async () => {
+    try {
+      const allLeads = [];
+      let page = 1;
+
+      while (page !== -1) {
+        const response = await getLead(page);
+        allLeads.push(...response.data.data);
+        page = response.data.next;
+      }
+
+      // Events need a WhatsApp number, so skip leads without a phone
+      setLeads(allLeads.filter((lead) => lead.phone));
+    } catch (error) {
+      console.error("Failed to fetch leads", error);
+    }
+  };
+
+  fetchLeads();
 }, []);
 
   return (
@@ -123,6 +150,48 @@ useEffect(() => {
 
           <form onSubmit={handleSubmit} className="space-y-6">
 
+            {/* Lead */}
+            <div>
+              <label className="mb-2 block text-[15px] font-bold text-[#fff8ee]">
+                Lead
+              </label>
+
+              <select
+                value={leadId}
+                onChange={(e) => {
+                  setLeadId(e.target.value);
+
+                  const lead = leads.find(
+                    (item) => String(item.id) === e.target.value
+                  );
+
+                  // Event date always comes from the selected lead
+                  setDate(lead?.date || "");
+
+                  setErrors((prev) => ({
+                    ...prev,
+                    lead: "",
+                    date: "",
+                  }));
+                }}
+                className="w-full rounded-[13px] border border-[#bca8c9]/20 bg-[#2b1835] px-4 py-3.5 text-[15px] font-medium text-[#fff8ee] outline-none transition focus:border-[#f4c95d] focus:ring-2 focus:ring-[#f4c95d]/20"
+              >
+                <option value="">Select lead</option>
+
+                {leads.map((lead) => (
+                  <option key={lead.id} value={lead.id}>
+                    {lead.name} - {lead.phone}
+                  </option>
+                ))}
+              </select>
+
+              {errors.lead && (
+                <p className="mt-2 text-[13px] font-semibold text-[#ff9cae]">
+                  {errors.lead}
+                </p>
+              )}
+            </div>
+
             {/* Date */}
             <div>
               <label className="mb-2 block text-[15px] font-bold text-[#fff8ee]">
@@ -132,15 +201,14 @@ useEffect(() => {
               <input
                 type="date"
                 value={date}
-                onChange={(e) => {
-                  setDate(e.target.value);
-                  setErrors((prev) => ({
-                    ...prev,
-                    date: "",
-                  }));
-                }}
-                className="w-full rounded-[13px] border border-[#bca8c9]/20 bg-[#2b1835] px-4 py-3.5 text-[15px] font-medium text-[#fff8ee] outline-none transition focus:border-[#f4c95d] focus:ring-2 focus:ring-[#f4c95d]/20"
+                readOnly
+                tabIndex={-1}
+                className="pointer-events-none w-full cursor-not-allowed rounded-[13px] border border-[#bca8c9]/20 bg-[#2b1835]/60 px-4 py-3.5 text-[15px] font-medium text-[#d5c5dc] outline-none"
               />
+
+              <p className="mt-2 text-[13px] text-[#8f7b9c]">
+                Filled automatically from the selected lead
+              </p>
 
               {errors.date && (
                 <p className="mt-2 text-[13px] font-semibold text-[#ff9cae]">
@@ -171,9 +239,21 @@ useEffect(() => {
                     <input
                       type="time"
                       value={endTime}
-                      onChange={(e) => setEndTime(e.target.value)}
+                      onChange={(e) => {
+                        setEndTime(e.target.value);
+                        setErrors((prev) => ({
+                          ...prev,
+                          endTime: "",
+                        }));
+                      }}
                       className="w-full rounded-[13px] border border-[#bca8c9]/20 bg-[#2b1835] px-4 py-3.5 text-[15px] font-medium text-[#fff8ee] outline-none transition focus:border-[#f4c95d] focus:ring-2 focus:ring-[#f4c95d]/20"
                     />
+
+                    {errors.endTime && (
+                      <p className="mt-2 text-[13px] font-semibold text-[#ff9cae]">
+                        {errors.endTime}
+                      </p>
+                    )}
                   </div>
 
               <select
@@ -219,66 +299,6 @@ useEffect(() => {
               )}
             </div>
 
-            {/* Client Name */}
-            <div>
-              <label className="mb-2 block text-[15px] font-bold text-[#fff8ee]">
-                Client Name
-              </label>
-
-              <input
-                type="text"
-                value={clientName}
-                onChange={(e) => {
-                  setClientName(e.target.value);
-                  setErrors((prev) => ({
-                    ...prev,
-                    clientName: "",
-                  }));
-                }}
-                placeholder="Enter client name"
-                className="w-full rounded-[13px] border border-[#bca8c9]/20 bg-[#2b1835] px-4 py-3.5 text-[15px] font-medium text-[#fff8ee] outline-none transition placeholder:text-[#8f7b9c] focus:border-[#f4c95d] focus:ring-2 focus:ring-[#f4c95d]/20"
-              />
-
-              {errors.clientName && (
-                <p className="mt-2 text-[13px] font-semibold text-[#ff9cae]">
-                  {errors.clientName}
-                </p>
-              )}
-            </div>
-
-            {/* WhatsApp Number */}
-            <div>
-              <label className="mb-2 block text-[15px] font-bold text-[#fff8ee]">
-                WhatsApp Number
-              </label>
-
-              <input
-                type="tel"
-                value={whatsappNumber}
-                onChange={(e) => {
-                  const value = e.target.value
-                    .replace(/\D/g, "")
-                    .slice(0, 10);
-
-                  setWhatsappNumber(value);
-
-                  setErrors((prev) => ({
-                    ...prev,
-                    whatsappNumber: "",
-                  }));
-                }}
-                placeholder="Enter 10 digit WhatsApp number"
-                maxLength={10}
-                className="w-full rounded-[13px] border border-[#bca8c9]/20 bg-[#2b1835] px-4 py-3.5 text-[15px] font-medium tracking-wide text-[#fff8ee] outline-none transition placeholder:text-[#8f7b9c] focus:border-[#f4c95d] focus:ring-2 focus:ring-[#f4c95d]/20"
-              />
-
-              {errors.whatsappNumber && (
-                <p className="mt-2 text-[13px] font-semibold text-[#ff9cae]">
-                  {errors.whatsappNumber}
-                </p>
-              )}
-            </div>
-
             {/* Buttons */}
             <div className="flex justify-end gap-3 pt-4">
               <button
@@ -291,9 +311,10 @@ useEffect(() => {
 
               <button
                 type="submit"
-                className="rounded-[13px] bg-[#f4c95d] px-6 py-3 text-[15px] font-bold text-[#24132f] transition hover:bg-[#e8bb4d]"
+                disabled={isSubmitting}
+                className="rounded-[13px] bg-[#f4c95d] px-6 py-3 text-[15px] font-bold text-[#24132f] transition hover:bg-[#e8bb4d] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:bg-[#f4c95d]"
               >
-                Add Event
+                {isSubmitting ? "Adding..." : "Add Event"}
               </button>
             </div>
 

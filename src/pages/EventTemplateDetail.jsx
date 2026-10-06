@@ -7,7 +7,16 @@ import {
   getEventTemplate,
   createCategoryTemplate,
   createTaskTemplate,
+  updateTaskTemplate,
 } from "../api/template";
+
+import {
+  REMINDER_TIME_REGEX,
+  REMINDER_TYPE_OPTIONS,
+  isValidReminderType,
+  sanitizeReminderTime,
+  formatReminder,
+} from "../lib/reminder";
 
 import "./EventTemplateDetail.css";
 
@@ -27,6 +36,10 @@ export default function EventTemplateDetail() {
   const [taskFormCategory, setTaskFormCategory] = useState(null);
   const [taskTitle, setTaskTitle] = useState("");
   const [selectedStaff, setSelectedStaff] = useState("");
+  const [taskTime, setTaskTime] = useState("");
+  const [taskReminderType, setTaskReminderType] = useState("before");
+  const [editingTaskId, setEditingTaskId] = useState(null);
+  const [taskError, setTaskError] = useState("");
   const [addingTask, setAddingTask] = useState(false);
 
   // Staff
@@ -112,37 +125,83 @@ export default function EventTemplateDetail() {
   };
 
   /*
-   * Add Task Template
+   * Task form helpers
    */
-  const handleAddTask = async (categoryTemplateId) => {
-    if (!taskTitle.trim()) {
-      return;
-    }
+  const resetTaskForm = () => {
+    setTaskFormCategory(null);
+    setEditingTaskId(null);
+    setTaskTitle("");
+    setSelectedStaff("");
+    setTaskTime("");
+    setTaskReminderType("before");
+    setTaskError("");
+  };
 
-    if (!selectedStaff) {
+  const openAddTaskForm = (categoryTemplateId) => {
+    resetTaskForm();
+    setTaskFormCategory(categoryTemplateId);
+  };
+
+  const openEditTaskForm = (categoryTemplateId, task) => {
+    resetTaskForm();
+    setTaskFormCategory(categoryTemplateId);
+    setEditingTaskId(task.id);
+    setTaskTitle(task.title || "");
+    setSelectedStaff(task.staffId ? String(task.staffId) : "");
+    setTaskTime(task.time || "");
+    setTaskReminderType(task.name || "before");
+  };
+
+  const handleTaskTimeChange = (value) => {
+    setTaskTime(sanitizeReminderTime(value));
+    setTaskError("");
+  };
+
+  const isTaskTimeValid = REMINDER_TIME_REGEX.test(taskTime);
+
+  const isTaskFormValid =
+    taskTitle.trim() &&
+    selectedStaff &&
+    isTaskTimeValid &&
+    isValidReminderType(taskReminderType);
+
+  /*
+   * Add / Edit Task Template
+   */
+  const handleSaveTask = async (categoryTemplateId) => {
+    if (!isTaskFormValid) {
       return;
     }
 
     try {
       setAddingTask(true);
+      setTaskError("");
 
       const data = {
         title: taskTitle.trim(),
         staffId: Number(selectedStaff),
+        time: taskTime,
+        name: taskReminderType,
       };
 
-      const result = await createTaskTemplate(
-        categoryTemplateId,
-        data
-      );
+      const result = editingTaskId
+        ? await updateTaskTemplate(editingTaskId, data)
+        : await createTaskTemplate(categoryTemplateId, data);
 
-      const newTask = result.data.data || result.data;
+      const savedTask = result.data.data || result.data;
 
       const assignedStaff =
         staffList.find(
           (staff) =>
             Number(staff.id) === Number(selectedStaff)
         ) || null;
+
+      const taskForState = {
+        ...savedTask,
+        categoryTemplateId: Number(categoryTemplateId),
+        staffId: Number(selectedStaff),
+        staff: assignedStaff,
+      };
 
       setTemplate((prev) => ({
         ...prev,
@@ -155,29 +214,30 @@ export default function EventTemplateDetail() {
             return category;
           }
 
+          const tasks = category.tasks || [];
+
           return {
             ...category,
 
-            tasks: [
-              ...(category.tasks || []),
-
-              {
-                ...newTask,
-                categoryTemplateId:
-                  Number(categoryTemplateId),
-                staffId: Number(selectedStaff),
-                staff: assignedStaff,
-              },
-            ],
+            tasks: editingTaskId
+              ? tasks.map((task) =>
+                  Number(task.id) === Number(editingTaskId)
+                    ? taskForState
+                    : task
+                )
+              : [...tasks, taskForState],
           };
         }),
       }));
 
-      setTaskTitle("");
-      setSelectedStaff("");
-      setTaskFormCategory(null);
+      resetTaskForm();
     } catch (error) {
-      console.error("Failed to create task template:", error);
+      console.error("Failed to save task template:", error);
+
+      setTaskError(
+        error.response?.data?.message ||
+          "Failed to save task template"
+      );
     } finally {
       setAddingTask(false);
     }
@@ -590,15 +650,9 @@ export default function EventTemplateDetail() {
                           taskFormCategory ===
                           category.id
                         ) {
-                          setTaskFormCategory(null);
-                          setTaskTitle("");
-                          setSelectedStaff("");
+                          resetTaskForm();
                         } else {
-                          setTaskFormCategory(
-                            category.id
-                          );
-                          setTaskTitle("");
-                          setSelectedStaff("");
+                          openAddTaskForm(category.id);
                         }
 
                       }}
@@ -653,32 +707,77 @@ export default function EventTemplateDetail() {
                       </select>
 
 
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        placeholder="Time (HH:mm)"
+                        title="Reminder offset from the event start, e.g. 01:30"
+                        maxLength={5}
+                        pattern="([01][0-9]|2[0-3]):[0-5][0-9]"
+                        value={taskTime}
+                        onChange={(e) =>
+                          handleTaskTimeChange(e.target.value)
+                        }
+                      />
+
+
+                      <select
+                        value={taskReminderType}
+                        onChange={(e) =>
+                          setTaskReminderType(e.target.value)
+                        }
+                      >
+
+                        {REMINDER_TYPE_OPTIONS.map((option) => (
+
+                          <option
+                            key={option.value}
+                            value={option.value}
+                          >
+                            {option.label}
+                          </option>
+
+                        ))}
+
+                      </select>
+
+
                       <button
                         onClick={() =>
-                          handleAddTask(category.id)
+                          handleSaveTask(category.id)
                         }
                         disabled={
                           addingTask ||
-                          !taskTitle.trim() ||
-                          !selectedStaff
+                          !isTaskFormValid
                         }
                       >
                         {addingTask
-                          ? "Adding..."
-                          : "Add Task"}
+                          ? "Saving..."
+                          : editingTaskId
+                            ? "Save Task"
+                            : "Add Task"}
                       </button>
 
 
                       <button
                         className="cancel-button"
-                        onClick={() => {
-                          setTaskFormCategory(null);
-                          setTaskTitle("");
-                          setSelectedStaff("");
-                        }}
+                        onClick={resetTaskForm}
                       >
                         Cancel
                       </button>
+
+
+                      {taskTime && !isTaskTimeValid && (
+                        <span className="task-form-error">
+                          Time must be in HH:mm format (e.g. 01:30)
+                        </span>
+                      )}
+
+                      {taskError && (
+                        <span className="task-form-error">
+                          {taskError}
+                        </span>
+                      )}
 
                     </div>
 
@@ -718,6 +817,8 @@ export default function EventTemplateDetail() {
 
                               <span className="task-id">
                                 Template Task #{task.id}
+                                {" • "}
+                                ⏰ {formatReminder(task)}
                               </span>
 
                             </div>
@@ -759,8 +860,14 @@ export default function EventTemplateDetail() {
                           </div>
 
 
-                          <button className="task-action">
-                            ⋮
+                          <button
+                            className="task-action"
+                            title="Edit task"
+                            onClick={() =>
+                              openEditTaskForm(category.id, task)
+                            }
+                          >
+                            Edit
                           </button>
 
                         </div>

@@ -5,6 +5,13 @@ import { getEventDetail } from "../api/event";
 import { getAllStaff } from "../api/staff";
 import { createCategory } from "../api/category";
 import { createTasks } from "../api/task";
+import {
+  REMINDER_TIME_REGEX,
+  REMINDER_TYPE_OPTIONS,
+  isValidReminderType,
+  sanitizeReminderTime,
+  formatReminder,
+} from "../lib/reminder";
 
 import "./EventDetails.css";
 
@@ -24,6 +31,9 @@ export default function EventDetails() {
   const [taskFormCategory, setTaskFormCategory] = useState(null);
   const [taskTitle, setTaskTitle] = useState("");
   const [selectedStaff, setSelectedStaff] = useState("");
+  const [taskTime, setTaskTime] = useState("");
+  const [taskReminderType, setTaskReminderType] = useState("before");
+  const [taskError, setTaskError] = useState("");
   const [addingTask, setAddingTask] = useState(false);
 
   // Staff
@@ -141,24 +151,48 @@ export default function EventDetails() {
   };
 
   /*
+   * Task form helpers
+   */
+  const resetTaskForm = () => {
+    setTaskFormCategory(null);
+    setTaskTitle("");
+    setSelectedStaff("");
+    setTaskTime("");
+    setTaskReminderType("before");
+    setTaskError("");
+  };
+
+  const handleTaskTimeChange = (value) => {
+    setTaskTime(sanitizeReminderTime(value));
+    setTaskError("");
+  };
+
+  const isTaskTimeValid = REMINDER_TIME_REGEX.test(taskTime);
+
+  const isTaskFormValid =
+    taskTitle.trim() &&
+    selectedStaff &&
+    isTaskTimeValid &&
+    isValidReminderType(taskReminderType);
+
+  /*
    * Add Task
    */
   const handleAddTask = async (categoryId) => {
-    if (!taskTitle.trim()) {
-      return;
-    }
-
-    if (!selectedStaff) {
+    if (!isTaskFormValid) {
       return;
     }
 
     try {
       setAddingTask(true);
+      setTaskError("");
 
       const data = {
         categoryId: Number(categoryId),
         staffId: Number(selectedStaff),
         title: taskTitle.trim(),
+        time: taskTime,
+        name: taskReminderType,
       };
 
       console.log("Creating task:", data);
@@ -211,12 +245,14 @@ export default function EventDetails() {
         }),
       }));
 
-      // Reset form
-      setTaskTitle("");
-      setSelectedStaff("");
-      setTaskFormCategory(null);
+      resetTaskForm();
     } catch (error) {
       console.error("Error creating task:", error);
+
+      setTaskError(
+        error.response?.data?.message ||
+          "Failed to create task"
+      );
     } finally {
       setAddingTask(false);
     }
@@ -804,15 +840,12 @@ export default function EventDetails() {
                           taskFormCategory ===
                           category.id
                         ) {
-                          setTaskFormCategory(null);
-                          setTaskTitle("");
-                          setSelectedStaff("");
+                          resetTaskForm();
                         } else {
+                          resetTaskForm();
                           setTaskFormCategory(
                             category.id
                           );
-                          setTaskTitle("");
-                          setSelectedStaff("");
                         }
 
                       }}
@@ -848,9 +881,7 @@ export default function EventDetails() {
                         }
                         onKeyDown={(e) => {
                           if (e.key === "Escape") {
-                            setTaskFormCategory(null);
-                            setTaskTitle("");
-                            setSelectedStaff("");
+                            resetTaskForm();
                           }
                         }}
                         autoFocus
@@ -888,6 +919,51 @@ export default function EventDetails() {
                       </select>
 
 
+                      {/* Reminder time */}
+
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        placeholder="Time (HH:mm)"
+                        title="Reminder offset from the event start, e.g. 01:30"
+                        maxLength={5}
+                        pattern="([01][0-9]|2[0-3]):[0-5][0-9]"
+                        value={taskTime}
+                        onChange={(e) =>
+                          handleTaskTimeChange(
+                            e.target.value
+                          )
+                        }
+                      />
+
+
+                      {/* Before / After */}
+
+                      <select
+                        value={taskReminderType}
+                        onChange={(e) =>
+                          setTaskReminderType(
+                            e.target.value
+                          )
+                        }
+                      >
+
+                        {REMINDER_TYPE_OPTIONS.map(
+                          (option) => (
+
+                            <option
+                              key={option.value}
+                              value={option.value}
+                            >
+                              {option.label}
+                            </option>
+
+                          )
+                        )}
+
+                      </select>
+
+
                       {/* Add task */}
 
                       <button
@@ -898,8 +974,7 @@ export default function EventDetails() {
                         }
                         disabled={
                           addingTask ||
-                          !taskTitle.trim() ||
-                          !selectedStaff
+                          !isTaskFormValid
                         }
                       >
                         {addingTask
@@ -912,14 +987,23 @@ export default function EventDetails() {
 
                       <button
                         className="cancel-button"
-                        onClick={() => {
-                          setTaskFormCategory(null);
-                          setTaskTitle("");
-                          setSelectedStaff("");
-                        }}
+                        onClick={resetTaskForm}
                       >
                         Cancel
                       </button>
+
+
+                      {taskTime && !isTaskTimeValid && (
+                        <span className="task-form-error">
+                          Time must be in HH:mm format (e.g. 01:30)
+                        </span>
+                      )}
+
+                      {taskError && (
+                        <span className="task-form-error">
+                          {taskError}
+                        </span>
+                      )}
 
                     </div>
 
@@ -976,6 +1060,8 @@ export default function EventDetails() {
 
                                 <span className="task-id">
                                   Task #{task.id}
+                                  {" • "}
+                                  ⏰ {formatReminder(task)}
                                 </span>
 
                               </div>

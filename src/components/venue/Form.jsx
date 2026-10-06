@@ -9,6 +9,8 @@ export default function UserForm() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [date, setDate] = useState("");
+  const [event, setEvent] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -22,6 +24,8 @@ export default function UserForm() {
   const handleSubmit = async(e) => {
     e.preventDefault();
 
+    if (isSubmitting) return;
+
     if (phone.length !== 10) {
       alert("Phone number must be exactly 10 digits.");
       return;
@@ -31,8 +35,10 @@ export default function UserForm() {
       name,
       phone,
       date,
+      event: event.trim(),
     };
 
+    setIsSubmitting(true);
     try {
     const response = await createLead(data);
 
@@ -43,12 +49,15 @@ export default function UserForm() {
     setName("");
     setPhone("");
     setDate("");
+    setEvent("");
 
   
   } catch (error) {
     console.error("Error creating lead:", error);
 
      toast.error("Something went wrong. Please try again.");
+  } finally {
+    setIsSubmitting(false);
   }
   };
 
@@ -167,6 +176,37 @@ export default function UserForm() {
             />
           </div>
 
+          {/* Event */}
+          <div>
+            <label
+              htmlFor="event"
+              className="mb-2 block text-[14px] font-bold text-[#fff9ed]"
+            >
+              Event
+            </label>
+
+            <input
+              id="event"
+              type="text"
+              value={event}
+              onChange={(e) => setEvent(e.target.value)}
+              placeholder="e.g. Wedding, Birthday Party"
+              maxLength={100}
+              required
+              className="
+                h-12 w-full rounded-[13px]
+                border border-[#a78bc64d]
+                bg-[#291437]
+                px-4 text-[15px] font-medium
+                text-[#fff9ed]
+                placeholder:text-[#a996b8]
+                outline-none transition-all
+                focus:border-[#f4c84a]
+                focus:ring-2 focus:ring-[#f4c84a]/20
+              "
+            />
+          </div>
+
           {/* Date */}
           <div>
             <label
@@ -200,6 +240,7 @@ export default function UserForm() {
           {/* Submit */}
           <button
             type="submit"
+            disabled={isSubmitting}
             className="
               mt-3 h-12 w-full rounded-[13px]
               bg-[#f4c84a]
@@ -212,9 +253,13 @@ export default function UserForm() {
               focus:outline-none
               focus:ring-2
               focus:ring-[#f4c84a]/40
+              disabled:cursor-not-allowed
+              disabled:opacity-60
+              disabled:hover:bg-[#f4c84a]
+              disabled:hover:translate-y-0
             "
           >
-            Submit
+            {isSubmitting ? "Submitting..." : "Submit"}
           </button>
         </form>
       </div>
