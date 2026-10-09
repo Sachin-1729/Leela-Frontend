@@ -192,6 +192,232 @@
   background: #f4ce64;
 }
 
+/* =========================
+   GUEST BROADCAST
+========================= */
+
+.broadcast-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.broadcast-fields {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.broadcast-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.broadcast-fields label span {
+  color: #a495b0;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.broadcast-fields textarea,
+.broadcast-fields input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 14px;
+
+  border: 1px solid rgba(196, 174, 216, 0.2);
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.05);
+  color: #faf7f2;
+
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  resize: vertical;
+}
+
+.broadcast-fields textarea:focus,
+.broadcast-fields input:focus {
+  border-color: rgba(237, 190, 69, 0.6);
+}
+
+.broadcast-fields small {
+  color: #94879f;
+  font-size: 12px;
+}
+
+.broadcast-hint {
+  margin-top: -8px;
+}
+
+.broadcast-preview {
+  padding: 16px 18px;
+
+  border-radius: 14px;
+  background: rgba(37, 211, 102, 0.07);
+  border: 1px solid rgba(37, 211, 102, 0.2);
+
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.broadcast-preview p {
+  margin: 0 0 10px;
+}
+
+.broadcast-preview p:last-child {
+  margin-bottom: 0;
+}
+
+.broadcast-preview-label {
+  margin-bottom: 10px;
+  color: #94879f;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.broadcast-preview-link {
+  color: #7fc8ff;
+}
+
+.broadcast-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.broadcast-item {
+  padding: 16px 18px;
+
+  border: 1px solid rgba(186, 158, 211, 0.13);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.broadcast-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.broadcast-item-content {
+  min-width: 0;
+}
+
+.broadcast-item-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #94879f;
+  font-size: 12px;
+}
+
+.broadcast-item-message {
+  margin: 8px 0 4px;
+  font-size: 14px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.broadcast-item-message em {
+  color: #94879f;
+}
+
+.broadcast-item-link {
+  color: #7fc8ff;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.broadcast-counts {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.broadcast-count--success { color: #6fd39b; }
+.broadcast-count--failed { color: #f19a9a; }
+.broadcast-count--pending { color: #edc34f; }
+
+.broadcast-status {
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.broadcast-status--success,
+.broadcast-status--completed {
+  background: rgba(111, 211, 155, 0.14);
+  color: #6fd39b;
+}
+
+.broadcast-status--failed {
+  background: rgba(241, 154, 154, 0.14);
+  color: #f19a9a;
+}
+
+.broadcast-status--pending,
+.broadcast-status--sending {
+  background: rgba(237, 190, 69, 0.14);
+  color: #edc34f;
+}
+
+.broadcast-invitations {
+  margin-top: 16px;
+}
+
+.broadcast-filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.broadcast-filters button {
+  padding: 6px 12px;
+
+  border: 1px solid rgba(196, 174, 216, 0.2);
+  border-radius: 999px;
+
+  background: transparent;
+  color: #a495b0;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.broadcast-filters button.active {
+  border-color: #edc34f;
+  color: #edc34f;
+}
+
+.broadcast-error {
+  color: #f19a9a;
+  font-size: 12px;
+}
+
+@media (max-width: 900px) {
+
+  .broadcast-form {
+    grid-template-columns: 1fr;
+  }
+
+}
+
 @media (max-width: 600px) {
 
   .guest-upload-header,
@@ -202,6 +428,14 @@
 
   .guest-search {
     width: 100%;
+  }
+
+  .broadcast-item-header {
+    flex-direction: column;
+  }
+
+  .broadcast-counts {
+    flex-wrap: wrap;
   }
 
   .guest-upload-card,

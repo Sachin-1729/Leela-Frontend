@@ -8,6 +8,7 @@ import {
   replaceEventGuests,
 } from "../api/event";
 import { parseGuestCsv } from "../lib/guestCsv";
+import GuestBroadcast from "../components/GuestBroadcast";
 
 import "./EventDetails.css";
 import "./EventGuests.css";
@@ -336,6 +337,13 @@ export default function EventGuests() {
         )}
 
       </section>
+
+
+      <GuestBroadcast
+        eventId={id}
+        ownerName={event.ownerName}
+        guestCount={guests.length}
+      />
 
 
       {/* =========================
