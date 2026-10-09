@@ -34,8 +34,8 @@ export function Footer() {
         </div>
 
         <div className="flex flex-wrap items-center justify-between gap-3 text-[13px] text-paper/50">
-          <span>© {new Date().getFullYear()} LEELA Cultural Arena. All rights reserved.</span>
-          <span>Kolkata, India</span>
+          <span>© {new Date().getFullYear()} LEELA Smart Event Arena. All rights reserved.</span>
+          <span>Ranchi, India</span>
         </div>
       </Container>
     </footer>
