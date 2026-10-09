@@ -10,7 +10,7 @@ export const portals = [
     num: '01',
     icon: '🏛️',
     title: 'Book a Venue',
-    copy: 'Amphitheatres, black-box theatres, galleries and rooftop lawns — live availability, locked in minutes.',
+    copy: 'Make your occasion truly yours. Book your space and bring your vision to life with the freedom to host, create, and celebrate your way. Birthdays • Weddings • Anniversaries • Celebrations • Conferences • Gatherings • Or anything worth creating memories.',
     cta: 'Explore venues',
     glow: 'glow-marigold',
     page:"/venue"
@@ -19,19 +19,21 @@ export const portals = [
     num: '02',
     icon: '🎟️',
     title: 'Buy a Pass',
-    copy: 'Verified passes to concerts, plays, art fairs and festivals — straight from the people running them.',
+    copy: 'Discover something new, exciting and worth being part of. Get your pass to curated events, activities and experiences at Leela, and come enjoy moments designed to be shared. Explore • Experience • Connect • Enjoy',
     cta: "See what's on",
     href: '#events',
     glow: 'glow-rani',
+    page:"/pass"
   },
   {
     num: '03',
     icon: '✨',
     title: 'Join a Community',
-    copy: 'Dance, music, art — find the circle that already gathers around what you love.',
+    copy: 'Bring your interests to life by finding people who share your passions. At Leela, join or create communities around art, drama, dance, music, yoga, gaming, hobbies, and more. Meet like-minded people, exchange ideas, discover new interests, and create meaningful connections through shared experiences.',
     cta: 'Find your circle',
     href: '#communities',
-    glow: 'glow-iris',
+    glow: 'glow',
+    page:'/community'
   },
 ]
 

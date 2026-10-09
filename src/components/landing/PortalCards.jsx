@@ -11,7 +11,6 @@ export function PortalCards({ id }) {
         <Reveal key={portal.num} delay={i * 90}>
           <Card
             as="a"
-            href={portal.cta == 'Explore venues' ? null: portal.href}
             surface="bare"
             radius="lg"
             hover="pop"
@@ -27,12 +26,11 @@ export function PortalCards({ id }) {
             <Heading level={3} size="sm" className="mb-2 text-[23px]">
               {portal.title}
             </Heading>
-            <Text size="sm" className="mb-5 grow">
-              {portal.copy}
-            </Text>
+             
+             <Text size="base" className="mb-5 grow text-base leading-8 tracking-wide" > {portal.copy} </Text>
 
             <span onClick={()=>{
-                   navigate("/venue");
+                   navigate(`${portal.page}`);
             }} className="inline-flex items-center gap-2 self-start rounded-full bg-paper px-4.5 py-2.5 font-display text-[14.5px] font-bold text-ink transition-[gap] duration-200 group-hover:gap-3">
               {portal.cta}
               <ArrowIcon className="h-[15px] w-[15px]" />

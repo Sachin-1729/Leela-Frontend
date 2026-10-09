@@ -5,18 +5,10 @@ import { featuredEvents } from '../../data/landing'
 export function FeaturedEvents() {
   return (
     <Reveal className="pt-2">
-      <div className="mb-5 flex flex-wrap items-baseline justify-between gap-4">
-        <Heading level={3} size="sm" className="flex items-center gap-2.5 text-xl">
-          <span className="h-2 w-2 rounded-full bg-marigold animate-pulse-ring" aria-hidden="true" />
-          Happening soon
-        </Heading>
-        <a href="#events" className="text-sm font-semibold text-marigold hover:underline">
-          See all upcoming events →
-        </a>
-      </div>
+    
 
       <div className="grid grid-cols-1 gap-[18px] md:grid-cols-3">
-        {featuredEvents.map((event) => (
+        {/* {featuredEvents.map((event) => (
           <Card key={event.title} as="a" href="#events" radius="sm" hover="subtle" className="p-4">
             <div className="flex items-center gap-4">
               <Mono
@@ -37,7 +29,7 @@ export function FeaturedEvents() {
               </div>
             </div>
           </Card>
-        ))}
+        ))} */}
       </div>
     </Reveal>
   )

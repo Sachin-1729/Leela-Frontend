@@ -19,6 +19,10 @@ export default function Sidebar() {
       name: "Template",
       path: "/template",
     },
+    {
+      name: "Community",
+      path: "/community-requests",
+    },
     // {
     //   name: "Categories",
     //   path: "/categories",

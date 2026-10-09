@@ -24,7 +24,7 @@ export function Hero() {
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[1] bg-spotlight" />
 
       <Container className="relative z-[2]">
-        <Eyebrow className="mb-6">Kolkata&nbsp;·&nbsp;Smart Event &amp; Cultural Arena</Eyebrow>
+        <Eyebrow className="mb-6">Ranchi&nbsp;·&nbsp;Smart Event Arena</Eyebrow>
 
         <Heading level={1} size="hero" className="max-w-[900px]">
           The city&apos;s
@@ -33,19 +33,19 @@ export function Hero() {
         </Heading>
 
         <Text size="lede" className="mt-6 mb-10 max-w-[560px] text-paper/80">
-          Book the venue. Grab the pass. Find your circle. LEELA is where Kolkata&apos;s events, artists and audiences
+          Book the venue. Grab the pass. Find your circle. LEELA is where Ranchi&apos;s events, artists and audiences
           actually meet — one arena, three ways in.
         </Text>
 
-        <div className="mb-16 flex flex-wrap gap-3.5">
+        {/* <div className="mb-16 flex flex-wrap gap-3.5">
           <Button href="#events">Browse passes</Button>
           <Button href="#venues" variant="outline">
             List your venue
           </Button>
-        </div>
+        </div> */}
 
         <PortalCards id="acts" />
-        <FeaturedEvents />
+        {/* <FeaturedEvents /> */}
       </Container>
 
       <div className="relative z-[2] mt-14">

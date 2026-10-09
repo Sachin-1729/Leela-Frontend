@@ -18,6 +18,9 @@ import EventGuests from './pages/EventGuests'
 import EventTemplate from './pages/EventTemplate'
 import AddEventTemplate from './pages/AddEventTemplate'
 import EventTemplateDetail from './pages/EventTemplateDetail'
+import Communitypage from "./pages/CommunityPage"
+import CommunityRequests from "./pages/CommunityRequests"
+import Pass from "./pages/Pass"
 
 function App() {
   return (
@@ -26,9 +29,10 @@ function App() {
 
               <Route path="/" element={<LandingPage />} />
               <Route path='/venue' element = {<Venues/>}/>
+              <Route path='/pass' element={<Pass/>}/>
         <Route element={<PublicRoute />}>
               <Route path="/login" element={<Login />} />
-
+               <Route path='/community' element={<Communitypage/>}/>
         </Route>
         
         <Route element = {<ProtectedRoute/>}>
@@ -47,6 +51,8 @@ function App() {
               <Route path='/template' element={<EventTemplate/>}/>
               <Route path='/template/add' element={<AddEventTemplate/>}/>
               <Route path='/template/:id' element={<EventTemplateDetail/>}/>
+              <Route path='/community-requests' element={<CommunityRequests/>}/>
+              
      
         </Route>
 
