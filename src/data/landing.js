@@ -9,16 +9,16 @@ export const portals = [
   {
     num: '01',
     icon: '🏛️',
-    title: 'Book a Venue',
+    title: 'BOOK THE ARENA',
     copy: 'Make your occasion truly yours. Book your space and bring your vision to life with the freedom to host, create, and celebrate your way. Birthdays • Weddings • Anniversaries • Celebrations • Conferences • Gatherings • Or anything worth creating memories.',
-    cta: 'Explore venues',
+    cta: 'Explore Leela',
     glow: 'glow-marigold',
     page:"/venue"
   },
   {
     num: '02',
     icon: '🎟️',
-    title: 'Buy a Pass',
+    title: 'GET THE PASS',
     copy: 'Discover something new, exciting and worth being part of. Get your pass to curated events, activities and experiences at Leela, and come enjoy moments designed to be shared. Explore • Experience • Connect • Enjoy',
     cta: "See what's on",
     href: '#events',
@@ -28,7 +28,7 @@ export const portals = [
   {
     num: '03',
     icon: '✨',
-    title: 'Join a Community',
+    title: 'BUILD YOUR COMMUNITY',
     copy: 'Bring your interests to life by finding people who share your passions. At Leela, join or create communities around art, drama, dance, music, yoga, gaming, hobbies, and more. Meet like-minded people, exchange ideas, discover new interests, and create meaningful connections through shared experiences.',
     cta: 'Find your circle',
     href: '#communities',
@@ -72,24 +72,43 @@ export const tickerItems = [
   { label: 'PASSES LIVE', text: 'Canvas & Chai: Live Art Market, Aug 23' },
 ]
 
-export const venues = [
+// Occasions shown in the "Book the Arena" slider.
+// `icon` is a placeholder emoji — set `image` to a file in /public (e.g. '/occasions/wedding.png') to use an icon instead.
+export const occasions = [
   {
-    tag: 'Open-air · 800 cap.',
-    title: 'Rangmanch Amphitheatre',
-    copy: "Kolkata's largest open-air stage — full sound rig, tiered seating and backstage green rooms included.",
+    title: 'Wedding',
+    icon: '💍',
+    image: null,
+    copy: 'Celebrate your big day with a venue dressed for vows, rituals and the reception that follows.',
     curtain: 'bg-marigold',
   },
   {
-    tag: 'Black-box · 120 cap.',
-    title: 'Studio Noor Theatre',
-    copy: 'An intimate, fully rigged black-box for theatre, screenings and small-format live sets.',
+    title: 'Birthday',
+    icon: '🎂',
+    image: null,
+    copy: 'From first birthdays to milestone parties — a space to gather everyone you love.',
     curtain: 'bg-rani',
   },
   {
-    tag: 'Rooftop · 200 cap.',
-    title: 'Ballygunge Rooftop Lawn',
-    copy: 'Skyline views for launches, art markets and evening sets — in-house catering partners available.',
+    title: 'Conference',
+    icon: '🎤',
+    image: null,
+    copy: 'Host talks, launches and corporate meets with room for your audience and your agenda.',
     curtain: 'bg-iris',
+  },
+  {
+    title: 'Celebration',
+    icon: '🎉',
+    image: null,
+    copy: 'Anniversaries, festivals and every reason in between — make the moment yours.',
+    curtain: 'bg-marigold',
+  },
+  {
+    title: 'Gathering',
+    icon: '🤝',
+    image: null,
+    copy: 'Family get-togethers, community meets and reunions worth creating memories at.',
+    curtain: 'bg-rani',
   },
 ]
 

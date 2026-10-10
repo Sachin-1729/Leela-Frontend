@@ -2,12 +2,15 @@ import { useState } from "react";
 import { createLead } from "../../api/lead";
 import { toast } from "react-toastify";
 
-/** Venue booking enquiry form — saves a lead. `onSuccess` runs after it is created. */
-export default function LeadForm({ onSuccess }) {
+/**
+ * Venue booking enquiry form — saves a lead. `onSuccess` runs after it is created.
+ * `initialEvent` pre-fills the event field (e.g. "Wedding").
+ */
+export default function LeadForm({ onSuccess, initialEvent = "" }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [date, setDate] = useState("");
-  const [event, setEvent] = useState("");
+  const [event, setEvent] = useState(initialEvent);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const tomorrow = new Date();
