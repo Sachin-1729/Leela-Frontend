@@ -22,20 +22,29 @@ export function Hero() {
     <section ref={stageRef} onMouseMove={handleMouseMove} className="relative overflow-hidden bg-stage pt-28 pb-24">
       <Rangoli />
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[1] bg-spotlight" />
+      {/* Building line-art over the top-right rangoli circle */}
+      <img
+        src="/leela-building-outline.png"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute right-0 top-[220px] z-[1] hidden w-[46%] max-w-[680px] md:block"
+      />
 
       <Container className="relative z-[2]">
-        <Eyebrow className="mb-6">Ranchi&nbsp;·&nbsp;Smart Event Arena</Eyebrow>
+        <div className="mb-14">
+          <Eyebrow className="mb-6">Ranchi&nbsp;·&nbsp;Smart Event Arena</Eyebrow>
 
-        <Heading level={1} size="hero" className="max-w-[900px]">
-          The city&apos;s
-          <br />
-          stage is <span className="text-marigold">open.</span>
-        </Heading>
+          <Heading level={1} size="hero" className="max-w-[900px]">
+            The city&apos;s
+            <br />
+            stage is <span className="text-marigold">open.</span>
+          </Heading>
 
-        <Text size="lede" className="mt-6 mb-10 max-w-[560px] text-paper/80">
-          Book the venue. Grab the pass. Find your circle. LEELA is where Ranchi&apos;s events, artists and audiences
-          actually meet — one arena, three ways in.
-        </Text>
+          <Text size="lede" className="mt-6 max-w-[560px] text-paper/80">
+            Book the venue. Grab the pass. Find your circle. LEELA is where Ranchi&apos;s events, artists and audiences
+            actually meet — one arena, three ways in.
+          </Text>
+        </div>
 
         {/* <div className="mb-16 flex flex-wrap gap-3.5">
           <Button href="#events">Browse passes</Button>

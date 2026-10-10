@@ -1,8 +1,14 @@
-import { ArrowLink, Card, Container, Heading, Mono, Reveal, Section, SectionHead, Text } from '../ui'
+import { useCallback, useState } from 'react'
+import { ArrowLink, Card, Container, Heading, Mono, Modal, Reveal, Section, SectionHead, Text } from '../ui'
 import { venues } from '../../data/landing'
+import LeadForm from '../venue/LeadForm'
 
 /** Bookable spaces, each with its own coloured stage-light blur. */
 export function Venues() {
+  const [venueToBook, setVenueToBook] = useState(null)
+
+  const closeModal = useCallback(() => setVenueToBook(null), [])
+
   return (
     <Section id="venues" className="bg-plum">
       <Container>
@@ -24,14 +30,30 @@ export function Venues() {
                   {venue.title}
                 </Heading>
                 <Text className="mb-6 min-h-[66px] text-paper/70">{venue.copy}</Text>
-                <ArrowLink href="#" className="mt-auto self-start">
-                  Check availability
+                <ArrowLink
+                  href="#venues"
+                  className="mt-auto self-start"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setVenueToBook(venue)
+                  }}
+                >
+                  Book this venue
                 </ArrowLink>
               </Card>
             </Reveal>
           ))}
         </div>
       </Container>
+
+      <Modal open={Boolean(venueToBook)} onClose={closeModal} label="Book a venue">
+        <div className="mb-7 pr-8">
+          <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-[#f2cc72]">Book a Venue</p>
+          <h2 className="text-[26px] font-extrabold leading-[1.15]">{venueToBook?.title}</h2>
+          <p className="mt-2 text-[14px] text-[#c9b7d8]">Please provide your details below.</p>
+        </div>
+        <LeadForm onSuccess={closeModal} />
+      </Modal>
     </Section>
   )
 }

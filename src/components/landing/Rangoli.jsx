@@ -16,9 +16,6 @@ export function Rangoli() {
         <circle cx="150" cy="80" r="70" />
         <circle cx="150" cy="80" r="46" />
         <path d="M150 10 L150 150 M80 80 L220 80 M100 30 L200 130 M200 30 L100 130" />
-        <circle cx="1080" cy="140" r="90" />
-        <circle cx="1080" cy="140" r="60" />
-        <circle cx="1080" cy="140" r="30" />
         <circle cx="980" cy="520" r="55" />
         <path d="M925 520 L1035 520 M980 465 L980 575 M943 483 L1017 557 M1017 483 L943 557" />
         <circle cx="60" cy="560" r="65" />

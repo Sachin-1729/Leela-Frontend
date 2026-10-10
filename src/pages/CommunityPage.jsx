@@ -1,95 +1,12 @@
 
 import { useState } from "react";
-import { toast } from "react-toastify";
-import { createCommunityRequest } from "../api/community";
-
-const communities = [
-  {
-    id: 1,
-    name: "Yoga",
-    icon: "🧘",
-    description:
-      "Find your balance, build strength, and reconnect with yourself through mindful movement and breath.",
-    members: "Mind & Body",
-    category: "Wellness",
-  },
-  {
-    id: 2,
-    name: "Dance",
-    icon: "💃",
-    description:
-      "Express yourself through movement, discover new styles, and share the joy of dance with others.",
-    members: "Move & Express",
-    category: "Performing Arts",
-  },
-  {
-    id: 3,
-    name: "Music",
-    icon: "🎵",
-    description:
-      "Connect through melodies, explore your musical interests, and create beautiful moments together.",
-    members: "Listen & Create",
-    category: "Performing Arts",
-  },
-  {
-    id: 4,
-    name: "Fine Arts",
-    icon: "🎨",
-    description:
-      "Explore painting, drawing, and creative expression in a community that celebrates imagination.",
-    members: "Imagine & Create",
-    category: "Visual Arts",
-  },
-];
-
-const initialFormData = {
-  name: "",
-  mobile: "",
-  city: "",
-};
+import { communities } from "../data/communities";
+import CommunityJoinForm from "../components/community/CommunityJoinForm";
+import CommunityJoinSuccess from "../components/community/CommunityJoinSuccess";
 
 export default function CommunityList() {
-
   const [communityToJoin, setCommunityToJoin] = useState(null);
-  const [formData, setFormData] = useState(initialFormData);
   const [registration, setRegistration] = useState(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!communityToJoin || isSubmitting) return;
-
-    const newRegistration = {
-      community: communityToJoin.name,
-      name: formData.name.trim(),
-      mobile: formData.mobile,
-      city: formData.city.trim(),
-    };
-
-    setIsSubmitting(true);
-    try {
-      await createCommunityRequest({
-        name: newRegistration.name,
-        phone: newRegistration.mobile,
-        community: newRegistration.community,
-        city: newRegistration.city,
-      });
-
-      setRegistration(newRegistration);
-      setFormData(initialFormData);
-      setCommunityToJoin(null);
-    } catch (error) {
-      console.error("Error submitting community request:", error);
-
-      toast.error(
-        error.response?.data?.message ||
-          "Something went wrong. Please try again."
-      );
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   const handleBackToCommunities = () => {
     setCommunityToJoin(null);
@@ -118,163 +35,23 @@ export default function CommunityList() {
 
         {/* Registration success message */}
         {registration ? (
-          <section
-            className="mx-auto max-w-xl rounded-[24px] border border-[#b69acb]/15 bg-[#2c1a3b]/85 p-6 text-center shadow-2xl sm:p-10"
-            role="status"
-          >
-            <div className="mb-5 text-6xl">🎉</div>
-
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-[#f2cc72]">
-              Registration Received
-            </p>
-
-            <h1 className="text-3xl font-extrabold">
-              Welcome, {registration.name}!
-            </h1>
-
-            <p className="mt-4 leading-7 text-[#c7b6d5]">
-              Thank you for joining our {registration.community} community.
-              We're excited to have you as part of Leela!
-            </p>
-
-            <div className="mt-7 rounded-xl border border-[#b69acb]/15 bg-[#241331]/70 p-5 text-left">
-              <p className="mb-3 font-bold text-[#f2cc72]">
-                Registration Details
-              </p>
-              <p className="mb-2">
-                <span className="text-[#bba9ca]">Name:</span>{" "}
-                {registration.name}
-              </p>
-              <p className="mb-2">
-                <span className="text-[#bba9ca]">Community:</span>{" "}
-                {registration.community}
-              </p>
-              <p className="mb-2">
-                <span className="text-[#bba9ca]">Mobile:</span>{" "}
-                {registration.mobile}
-              </p>
-              <p>
-                <span className="text-[#bba9ca]">City:</span>{" "}
-                {registration.city}
-              </p>
-            </div>
-
-            <button
-              type="button"
-              onClick={handleBackToCommunities}
-              className="mt-7 w-full rounded-xl bg-[#f2cc72] px-6 py-4 font-extrabold text-[#261431] transition hover:bg-[#ffda87]"
-            >
-              Explore More Communities →
-            </button>
+          <section className="mx-auto max-w-xl rounded-[24px] border border-[#b69acb]/15 bg-[#2c1a3b]/85 p-6 shadow-2xl sm:p-10">
+            <CommunityJoinSuccess
+              registration={registration}
+              onDone={handleBackToCommunities}
+              doneLabel="Explore More Communities →"
+            />
           </section>
         ) : communityToJoin ? (
           /* Registration form */
           <section className="mx-auto max-w-xl rounded-[24px] border border-[#b69acb]/15 bg-[#2c1a3b]/85 p-6 shadow-2xl sm:p-10">
-            <div className="mb-7 text-center">
-              <div className="mb-4 text-5xl">
-                {communityToJoin.icon}
-              </div>
-
-              <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-[#f2cc72]">
-                Join the Leela Community
-              </p>
-
-              <h1 className="text-3xl font-extrabold">
-                Join {communityToJoin.name}
-              </h1>
-
-              <p className="mt-3 leading-7 text-[#c7b6d5]">
-                Tell us a little about yourself to get started.
-              </p>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="mb-2 block text-sm font-semibold"
-                >
-                  Full Name
-                </label>
-
-                <input
-                  id="name"
-                  type="text"
-                  placeholder="Enter your full name"
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      name: e.target.value,
-                    }))
-                  }
-                  required
-                  autoComplete="name"
-                  className="w-full rounded-xl border border-[#b69acb]/25 bg-[#241331] px-4 py-3.5 text-white outline-none placeholder:text-[#a995ba] focus:border-[#f2cc72]"
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="mobile"
-                  className="mb-2 block text-sm font-semibold"
-                >
-                  Mobile Number
-                </label>
-
-                <input
-                  id="mobile"
-                  type="tel"
-                  placeholder="Enter your mobile number"
-                  value={formData.mobile}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      mobile: e.target.value.replace(/\D/g, "").slice(0, 10),
-                    }))
-                  }
-                  required
-                  autoComplete="tel"
-                  inputMode="numeric"
-                  pattern="[0-9]{10}"
-                  title="Enter a 10-digit mobile number"
-                  className="w-full rounded-xl border border-[#b69acb]/25 bg-[#241331] px-4 py-3.5 text-white outline-none placeholder:text-[#a995ba] focus:border-[#f2cc72]"
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="city"
-                  className="mb-2 block text-sm font-semibold"
-                >
-                  City
-                </label>
-
-                <input
-                  id="city"
-                  type="text"
-                  placeholder="Enter your city"
-                  value={formData.city}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      city: e.target.value,
-                    }))
-                  }
-                  required
-                  autoComplete="address-level2"
-                  className="w-full rounded-xl border border-[#b69acb]/25 bg-[#241331] px-4 py-3.5 text-white outline-none placeholder:text-[#a995ba] focus:border-[#f2cc72]"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="mt-3 flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#f2cc72] px-6 py-4 font-extrabold text-[#261431] transition hover:bg-[#ffda87] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f2cc72] disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {isSubmitting ? "Submitting..." : "Submit Registration →"}
-              </button>
-            </form>
+            <CommunityJoinForm
+              community={communityToJoin}
+              onSuccess={(newRegistration) => {
+                setRegistration(newRegistration);
+                setCommunityToJoin(null);
+              }}
+            />
           </section>
         ) : (
           /* Community selection page */
@@ -351,10 +128,7 @@ export default function CommunityList() {
 
                           <button
                             type="button"
-                            onClick={() => {
-                              setFormData(initialFormData);
-                              setCommunityToJoin(community);
-                            }}
+                            onClick={() => setCommunityToJoin(community)}
                             className="rounded-xl border border-[#e8bd55]/35 px-4 py-3 text-sm font-bold text-[#f2cc72] transition hover:bg-[#e8bd55]/10"
                           >
                             JOIN

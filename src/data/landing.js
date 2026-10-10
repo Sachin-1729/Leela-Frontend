@@ -93,54 +93,9 @@ export const venues = [
   },
 ]
 
-export const upcomingEvents = [
-  {
-    date: 'AUG 16',
-    title: 'Kolkata Indie Music Fest',
-    meta: 'Rangmanch Amphitheatre · 6 PM',
-    price: '₹899',
-    cta: 'Get pass',
-    art: 'linear-gradient(135deg,#E0357B,#7B2E63)',
-  },
-  {
-    date: 'AUG 23',
-    title: 'Canvas & Chai: Live Art Market',
-    meta: 'Studio Noor Gallery · 11 AM',
-    price: '₹349',
-    cta: 'Get pass',
-    art: 'linear-gradient(135deg,#F5A623,#B9701A)',
-  },
-  {
-    date: 'AUG 30',
-    title: 'Odissi Under the Stars',
-    meta: 'Rooftop Lawn, Ballygunge · 7 PM',
-    price: '₹599',
-    cta: 'Get pass',
-    art: 'linear-gradient(135deg,#7C6CE0,#3A2E7A)',
-  },
-  {
-    date: 'SEP 05',
-    title: 'Open Mic: Verses & Vinyl',
-    meta: 'The Attic Black-Box · 8 PM',
-    price: 'Free',
-    cta: 'Reserve',
-    art: 'linear-gradient(135deg,#2FA88A,#155A48)',
-  },
-  {
-    date: 'SEP 12',
-    title: 'Durga Puja Curtain Raiser',
-    meta: 'Rangmanch Amphitheatre · 5 PM',
-    price: '₹1,199',
-    cta: 'Get pass',
-    art: 'linear-gradient(135deg,#E0357B,#F5A623)',
-  },
-]
-
-export const communities = [
-  { icon: '💃', name: 'Dance', members: '2,140 members · 14 groups', glow: 'glow-top-rani' },
-  { icon: '🎵', name: 'Music', members: '3,860 members · 22 groups', glow: 'glow-top-marigold' },
-  { icon: '🎨', name: 'Art', members: '1,570 members · 9 groups', glow: 'glow-top-iris' },
-]
+// Public events with passes on sale. Leave empty to show "No upcoming public events".
+// Shape: { date: 'AUG 16', title, meta, price, cta, art } — art is a CSS background.
+export const upcomingEvents = []
 
 export const stats = [
   { value: '120+', label: 'Venues listed' },

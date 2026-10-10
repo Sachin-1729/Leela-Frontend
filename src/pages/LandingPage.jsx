@@ -10,11 +10,11 @@ export default function LandingPage() {
       <main>
         <Hero />
         <Perforation />
-        {/* <Venues /> */}
-        {/* <Perforation flip /> */}
-        {/* <UpcomingEvents /> */}
-        {/* <Perforation />
-        <Communities /> */}
+        <Venues />
+        <Perforation flip />
+        <UpcomingEvents />
+        <Perforation />
+        <Communities />
         {/* <Stats />
         <Finale /> */}
       </main>
