@@ -157,9 +157,10 @@ export const footerColumns = [
   {
     title: 'Get in touch',
     links: [
-      { label: 'hello@leela.events', href: '#' },
-      { label: 'Instagram', href: '#' },
-      { label: 'WhatsApp', href: '#' },
+      { icon: 'whatsapp', label: '+91 97710 54570', href: 'https://wa.me/919771054570' },
+      // TODO: replace with the Leela Instagram profile URL and handle
+      { icon: 'instagram', label: 'Instagram', href: '#' },
+      { icon: 'email', label: 'hello@leela.events', href: 'mailto:hello@leela.events' },
     ],
   },
 ]
