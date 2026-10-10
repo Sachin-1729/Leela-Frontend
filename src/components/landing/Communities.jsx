@@ -17,7 +17,7 @@ export function Communities() {
   return (
     <Section id="communities" className="bg-plum">
       <Container>
-        <SectionHead kicker="Find your circle" title="Join a community.">
+        <SectionHead kicker="Find your circle" title="Build Your Community.">
           Find your passion, meet like-minded people, and become part of something meaningful at Leela.
         </SectionHead>
 
@@ -42,7 +42,6 @@ export function Communities() {
                 </Text>
                 <Button
                   type="button"
-                  variant="soft"
                   size="md"
                   className="self-start"
                   onClick={() => setCommunityToJoin(community)}

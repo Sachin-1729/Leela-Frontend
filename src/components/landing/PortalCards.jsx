@@ -31,7 +31,7 @@ export function PortalCards({ id }) {
 
             <span onClick={()=>{
                    navigate(`${portal.page}`);
-            }} className="inline-flex items-center gap-2 self-start rounded-full bg-paper px-4.5 py-2.5 font-display text-[14.5px] font-bold text-ink transition-[gap] duration-200 group-hover:gap-3">
+            }} className="inline-flex items-center gap-2 self-start rounded-full bg-marigold px-4.5 py-2.5 font-display text-[14.5px] font-bold text-ink transition-[gap] duration-200 group-hover:gap-3">
               {portal.cta}
               <ArrowIcon className="h-[15px] w-[15px]" />
             </span>

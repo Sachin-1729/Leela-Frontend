@@ -11,7 +11,7 @@ export const portals = [
     icon: '🏛️',
     title: 'BOOK THE ARENA',
     copy: 'Make your occasion truly yours. Book your space and bring your vision to life with the freedom to host, create, and celebrate your way. Birthdays • Weddings • Anniversaries • Celebrations • Conferences • Gatherings • Or anything worth creating memories.',
-    cta: 'Explore Leela',
+    cta: 'Book Leela',
     glow: 'glow-marigold',
     page:"/venue"
   },
@@ -115,6 +115,20 @@ export const occasions = [
 // Public events with passes on sale. Leave empty to show "No upcoming public events".
 // Shape: { date: 'AUG 16', title, meta, price, cta, art } — art is a CSS background.
 export const upcomingEvents = []
+
+// About section — features called out around the building outline.
+// Coordinates are in the diagram's 1000x760 viewBox: (x, y) is the label's text position,
+// `lx` where its leader line leaves the label, (tx, ty) the point it touches on the building.
+export const aboutFeatures = [
+  { label: 'Leela’s Smart Tech', x: 20, y: 40, lx: 150, tx: 250, ty: 330 },
+  { label: 'Philips Architectural Lighting', x: 120, y: 95, lx: 260, tx: 390, ty: 325 },
+  { label: 'Centralized Air-Conditioning', x: 380, y: 150, lx: 500, tx: 565, ty: 320 },
+  { label: 'JBL Professional Sound', x: 600, y: 205, lx: 760, tx: 830, ty: 330 },
+  { label: 'Dedicated Service & Utility Area', x: 10, y: 575, lx: 50, tx: 125, ty: 440 },
+  { label: 'Acoustic Engineering', x: 200, y: 630, lx: 330, tx: 440, ty: 470 },
+  { label: 'Dynamic Interior', x: 420, y: 685, lx: 520, tx: 610, ty: 470 },
+  { label: 'Premium Matte-Beige Flooring', x: 600, y: 740, lx: 780, tx: 760, ty: 485 },
+]
 
 export const stats = [
   { value: '120+', label: 'Venues listed' },
