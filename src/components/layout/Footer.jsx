@@ -34,8 +34,7 @@ export function Footer() {
           <div className="col-span-2 md:col-span-1">
             <Logo className="mb-3.5" />
             <Text size="sm" tone="dim" className="max-w-[260px]">
-              The smart event &amp; cultural arena — book venues, buy passes, and join the communities behind
-              Kolkata&apos;s stages.
+              The smart event &amp; cultural arena — book venues, buy passes, and join the communities.
             </Text>
           </div>
 
